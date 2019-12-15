@@ -14,6 +14,14 @@
 <body>
     <?php require_once "process.php" ?>
 
+    <?php if( isset($_SESSION['message']) ): ?>
+    <div class="alert alert-<?=$_SESSION['msg_type']?>">
+    <?php echo $_SESSION['message'];
+    unset($_SESSION['message']);
+    ?>
+    </div>
+    <?php endif ?>
+
     <?php
     function pre_r( $array ) {
         echo '<pre>';
@@ -43,7 +51,7 @@
             <td><?php echo $row['location'];?></td>
             <td><a href="survivorList.php?edit=<?php echo $row['id']; ?>"
                 class="btn btn-info">Edit</a>
-                <a href="process.php?delete=<?php echo $row['id']; ?>"
+                <a href="survivorList.php?delete=<?php echo $row['id']; ?>"
                 class="btn btn-danger">Delete</a></td>
         </tr>
     <?php endwhile ?>
@@ -53,23 +61,24 @@
 
     <div class="row justify-content-center">
     <form action="process.php" method="POST">
+        <input type="hidden" name="id" value="<?php echo $id?>">
     <div class="form-group">
         <label>Name:</label>
-        <input type="text" name="name" class="form-control" value="What's your name?">
+        <input type="text" name="name" class="form-control" value="<?php echo $name?>" placeholder="What's your name?">
     </div> 
     <div class="form-group">
         <label>Location:</label>
-        <input type="text" name="location" class="form-control" value="Where're you from?">
+        <input type="text" name="location" class="form-control" value="<?php echo $location?>" placeholder="Where're you from?">
     <div class="form-group">
     </div> 
-        <button type="submit" name="save" class="btn btn-primary">That's it.</button>
-    </div>
+        <?php if($update == false): ?>
+        <button type="submit" name="save" class="btn btn-primary">Save</button>
+        <?php else: ?>
+        <button type="submit" name="edit" class="btn btn-info">Edit</button>
+        <?php endif; ?>
+        </div>
 </form>
 </div>
-
-
-
-
 <div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
