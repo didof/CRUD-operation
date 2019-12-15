@@ -12,6 +12,7 @@
     <title>Survivor List</title>
 </head>
 <body>
+    test
     <?php require_once "process.php" ?>
 
     <?php if( isset($_SESSION['message']) ): ?>
